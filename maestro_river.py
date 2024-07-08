@@ -19,6 +19,7 @@ from custom_environment import FightingEnv
 from proxy_agent import ProxyAgent
 from util import flatten_dict, get_classpath_string
 
+import time
 
 def process_agent_p(pipe: Pipe):
     metric = metrics.BalancedAccuracy()
@@ -98,7 +99,7 @@ def run_train_game():
             "20",
             "-f",
             "100000",
-            "--disable-window",
+            #"--disable-window",
         ],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
@@ -154,6 +155,7 @@ if __name__ == "__main__":
         pipe_agent_p_communication_worker,
     ) = Pipe()  # not for reset
 
+    time.sleep(5)
     game_comm = Process(
         target=game_train_communication,
         args=(pipe_agent_p_game, pipe_agent_e_game, pipe_gateway_worker),

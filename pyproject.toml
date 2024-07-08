@@ -17,7 +17,7 @@ pytest = "^7.4.3"
 pyftg = {git = "https://github.com/TheDarkchip/pyftg.git"}
 stable-baselines3 = "^2.1.0"
 protobuf = "^4.25.0"
-tensorflow = ">=2.3.0"
+tensorflow = ">=2.11.1"
 autokeras = "^1.1.0"
 visualkeras = "^0.0.2"
 pillow = "9.5"
