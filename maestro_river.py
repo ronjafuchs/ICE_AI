@@ -29,7 +29,8 @@ def process_agent_p(pipe: Pipe):
         seed=42,
         split_criterion="gini",
         grace_period=34,
-        max_features=None,
+        max_features=None,      # while not documented, None sets the amount of features used to all
+        # available features (n_features)
         drift_detector=ADWIN(),
         lambda_value=20,
         leaf_prediction="nb",

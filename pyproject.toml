@@ -4,6 +4,8 @@ version = "0.1.0"
 description = ""
 authors = ["Robin Gieseke <robin.gieseke@me.com>"]
 readme = "README.md"
+package-mode = false
+
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
@@ -19,6 +21,7 @@ tensorflow = ">=2.3.0"
 autokeras = "^1.1.0"
 visualkeras = "^0.0.2"
 pillow = "9.5"
+torch = "2.0.0"
 
 
 [build-system]
