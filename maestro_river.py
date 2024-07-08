@@ -17,7 +17,7 @@ from agent_p import AgentP
 from custom_callback import PredictionCallback
 from custom_environment import FightingEnv
 from proxy_agent import ProxyAgent
-from util import flatten_dict
+from util import flatten_dict, get_classpath_string
 
 
 def process_agent_p(pipe: Pipe):
@@ -84,11 +84,8 @@ def process_agent_e(training_pipe: Pipe, prediction_pipe: Pipe):
 
 def run_train_game():
     return subprocess.Popen(
+        get_classpath_string() +
         [
-            "java",
-            "-XstartOnFirstThread",
-            "-cp",
-            "FightingICE.jar:./lib/*:./lib/lwjgl/*:./lib/lwjgl/natives/macos/arm64/*:./lib/grpc/*",
             "Main",
             "--limithp",
             "400",
@@ -110,11 +107,7 @@ def run_train_game():
 
 def run_player_game():
     return subprocess.Popen(
-        [
-            "java",
-            "-XstartOnFirstThread",
-            "-cp",
-            "FightingICE.jar:./lib/*:./lib/lwjgl/*:./lib/lwjgl/natives/macos/arm64/*:./lib/grpc/*",
+        get_classpath_string() + [
             "Main",
             "--limithp",
             "400",
