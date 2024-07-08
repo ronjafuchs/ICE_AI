@@ -61,4 +61,18 @@ sudo apt-get install nvidia-cuda-toolkit nvidia-cuda-toolkit-gcc
 ## if this still returns a similar error use the following line to downgrade torch (known issue with poetry)
 poetry add torch=2.0.0
 
+# before we start with python development, 
+# try to run the following command and choose two keyboard players 
+# to fight against each other, y / z -> select in menu
+java -cp FightingICE.jar:./lib/*:./lib/lwjgl/*:./lib/lwjgl/natives/linux/amd64/*:./lib/grpc/*:./lib/lwjgl_util.jar Main --limithp 400 400 --inverted-player 1 --grpc
+
+# if this runs successfully, try executing little_maestro.py
+# it should load a new game window in which two proxy agents are selected 
+# to fight against each other, once you start the game, they will do nothing
+
+
+
+
+# if nothing works -> give up
+
 

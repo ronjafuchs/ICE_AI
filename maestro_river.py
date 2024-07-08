@@ -78,7 +78,7 @@ def process_agent_e(training_pipe: Pipe, prediction_pipe: Pipe):
     print("env created")
     model = A2C("CnnPolicy", env, verbose=1)
     print("model created")
-    model.learn(total_timesteps=100_000, callback=prediction_callback)
+    model.learn(total_timesteps=100_000, callback=prediction_callback, progress_bar=True)
     print("model learned")
     model.save("a2c_fighting")
 
@@ -94,12 +94,14 @@ def run_train_game():
             "--inverted-player",
             "1",
             "--grpc-auto",
+            "--port",
+            "50051",
             "--fastmode",
             "-r",
             "20",
             "-f",
             "100000",
-            #"--disable-window",
+            "--disable-window",
         ],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
@@ -123,15 +125,13 @@ def run_player_game():
         stderr=subprocess.DEVNULL,
     )
 
-
 def game_train_communication(
     pipe_agent_p: Pipe, pipe_agent_e: Pipe, pipe_gateway: Pipe
 ):
-    gateway = Gateway()
+    gateway = Gateway(port=50051)
     gateway.register_ai("AgentP", AgentP(pipe_agent_p))
     gateway.register_ai("AgentE", AgentE(pipe_agent_e))
     gateway.run_game(["ZEN", "ZEN"], ["AgentP", "AgentE"], 1)
-
 
 def game_player_communication(pipe_proxy_agent: Pipe):
     gateway = Gateway(port=50060)
@@ -149,13 +149,10 @@ if __name__ == "__main__":
     pipe_env_maestro, pipe_env_worker = Pipe()  # not for reset
     pipe_prediction_maestro, pipe_prediction_worker = Pipe()  # not for reset
     pipe_proxy_agent_maestro, pipe_proxy_agent_worker = Pipe()  # not for reset
-    pipe_gateway_maestro, pipe_gateway_worker = Pipe()  # for reset
-    (
-        pipe_agent_p_communication_maestro,
-        pipe_agent_p_communication_worker,
-    ) = Pipe()  # not for reset
+    pipe_agent_p_communication_maestro, pipe_agent_p_communication_worker = Pipe()  # not for reset
 
-    time.sleep(5)
+
+    time.sleep(1)
     game_comm = Process(
         target=game_train_communication,
         args=(pipe_agent_p_game, pipe_agent_e_game, pipe_gateway_worker),
@@ -204,6 +201,7 @@ if __name__ == "__main__":
                 game_comm.terminate()
                 game_process.terminate()
                 game_process = run_train_game()
+                time.sleep(1)
                 pipe_agent_p_maestro, pipe_agent_p_game = Pipe()
                 pipe_agent_e_maestro, pipe_agent_e_game = Pipe()
                 pipe_gateway_maestro, pipe_gateway_worker = Pipe()

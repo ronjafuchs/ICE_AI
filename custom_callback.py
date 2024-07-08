@@ -9,6 +9,7 @@ class PredictionCallback(BaseCallback):
         self.pipe = pipe
 
     def _on_step(self) -> bool:
+        print("on_step_prediction_callback")
         # Access the agent's policy and make predictions
         message, image = None, None
         if self.pipe.poll():
