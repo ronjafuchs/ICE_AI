@@ -21,6 +21,7 @@ from util import flatten_dict, get_classpath_string
 
 import time
 
+
 def process_agent_p(pipe: Pipe):
     metric = metrics.BalancedAccuracy()
 
@@ -149,15 +150,16 @@ if __name__ == "__main__":
     pipe_env_maestro, pipe_env_worker = Pipe()  # not for reset
     pipe_prediction_maestro, pipe_prediction_worker = Pipe()  # not for reset
     pipe_proxy_agent_maestro, pipe_proxy_agent_worker = Pipe()  # not for reset
+    pipe_gateway_maestro, pipe_gateway_worker = Pipe()  # for reset
     pipe_agent_p_communication_maestro, pipe_agent_p_communication_worker = Pipe()  # not for reset
 
-
-    time.sleep(1)
     game_comm = Process(
         target=game_train_communication,
         args=(pipe_agent_p_game, pipe_agent_e_game, pipe_gateway_worker),
     )
     game_comm.start()
+    time.sleep(5)
+
     player_game_comm = Process(
         target=game_player_communication, args=(pipe_proxy_agent_worker,)
     )
