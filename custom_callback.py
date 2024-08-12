@@ -11,6 +11,7 @@ class PredictionCallback(BaseCallback):
     def _on_step(self) -> bool:
         # Access the agent's policy and make predictions
         message, image = None, None
+        #print("prediction callback running")
         if self.pipe.poll():
             message, image = self.pipe.recv()
         else:
@@ -21,9 +22,11 @@ class PredictionCallback(BaseCallback):
             pass
         else:
             assert False
+
         image = image / 255
         image = image.reshape((1, 1, 64, 96))
         action, _ = self.model.predict(image)
-        self.training_env
         self.pipe.send(["ACTION", action[0]])
+        #print("RL agent responds with action", action[0])
+
         return True

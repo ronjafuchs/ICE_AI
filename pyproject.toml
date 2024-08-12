@@ -8,7 +8,7 @@ package-mode = false
 
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.9"
 river = "^0.19.0"
 numpy = "^1.26.1"
 pandas = "^2.1.2"
@@ -17,12 +17,16 @@ pytest = "^7.4.3"
 pyftg = {git = "https://github.com/TheDarkchip/pyftg.git"}
 stable-baselines3 = "^2.1.0"
 protobuf = "^4.25.0"
-tensorflow = ">=2.11.1"
-autokeras = "^1.1.0"
-visualkeras = "^0.0.2"
 pillow = "9.5"
-torch = "2.0.0"
+torch = {version = "^2.3.1+cu118", source = "pytorch-gpu"}
+torchvision = {version = "^0.18.1+cu118", source = "pytorch-gpu"}
+torchaudio = {version = "^2.3.1+cu118", source = "pytorch-gpu"}
 
+
+[[tool.poetry.source]]
+name = "pytorch-gpu"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

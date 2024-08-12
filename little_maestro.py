@@ -10,6 +10,7 @@ from util import get_classpath_string
 
 import time
 
+
 def process_agent_e(training_pipe: Pipe, prediction_pipe: Pipe):
     prediction_callback = PredictionCallback(prediction_pipe)
     env = FightingEnv(training_pipe)

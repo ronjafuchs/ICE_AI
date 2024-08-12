@@ -8,8 +8,8 @@ import pandas as pd
 from pyftg.gateway import Gateway
 from river import metrics
 from stable_baselines3 import A2C
-from agent_e import AgentE
-from agent_p import AgentP
+from agent_rl import AgentRL
+from agent_river import AgentRiver
 from custom_callback import PredictionCallback
 from custom_environment import FightingEnv
 from proxy_agent import ProxyAgent
@@ -173,15 +173,15 @@ def game_train_communication(
     pipe_agent_p: Pipe, pipe_agent_e: Pipe, pipe_gateway: Pipe
 ):
     gateway = Gateway()
-    gateway.register_ai("AgentP", AgentP(pipe_agent_p))
-    gateway.register_ai("AgentE", AgentE(pipe_agent_e))
+    gateway.register_ai("AgentP", AgentRiver(pipe_agent_p))
+    gateway.register_ai("AgentE", AgentRL(pipe_agent_e))
     gateway.run_game(["ZEN", "ZEN"], ["AgentP", "AgentE"], 1)
 
 
 def game_player_communication(pipe_proxy_agent: Pipe):
     gateway = Gateway(port=50060)
     gateway.register_ai("PROXY_AGENT", ProxyAgent())
-    gateway.register_ai("AgentE", AgentE(pipe_proxy_agent))
+    gateway.register_ai("AgentE", AgentRL(pipe_proxy_agent))
     gateway.run_game(["ZEN", "ZEN"], ["PROXY_AGENT", "AgentE"], 2)
     # gateway.run_game(["ZEN", "ZEN"], ["Human", "AgentE"], 2)
 

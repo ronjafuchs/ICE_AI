@@ -43,6 +43,7 @@ class ProxyAgent(AIInterface):
         self.audio_data = audio_data
 
     def processing(self):
+
         if self.frame_data.empty_flag or self.frame_data.current_frame_number <= 0:
             return
 
